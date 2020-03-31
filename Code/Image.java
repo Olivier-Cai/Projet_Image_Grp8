@@ -21,11 +21,18 @@ public class Image {
 	}
 
 	public static void main(String[] args) {
-		File path = new File("/Users/oliviercai/Downloads/ImageL3-master/Test_Images/model1.jpg");
+		File path = new File("/Users/oliviercai/eclipse-workspace/PAA/Projet_Image_Grp8/Bdd/model1.jpg");
 		BufferedImage img = null;
 		
 		try {
 			img = ImageIO.read(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			imshow(img);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
