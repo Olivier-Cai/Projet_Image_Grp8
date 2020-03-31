@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 public class Image {
 	public static void imshow(BufferedImage image) throws IOException {
 		// Instantiate JFrame
+		//hello
 		JFrame frame = new JFrame();
 
 		// Set Content to the JFrame
