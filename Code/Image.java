@@ -1,5 +1,6 @@
 package code;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class Image {
 		frame.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		File path = new File("/Users/oliviercai/eclipse-workspace/PAA/Projet_Image_Grp8/Bdd/model1.jpg");
+	public static void maintest(String[] args) {
+		File path = new File("C:\\Users\\willy\\Documents\\Licence_maths_info\\S6\\Image\\projetImage\\Projet_Image_Grp8\\Bdd\\model1.jpg");
 		BufferedImage img = null;
 		
 		try {
@@ -38,4 +39,5 @@ public class Image {
 			e.printStackTrace();
 		}
 	}
+	
 }
