@@ -21,8 +21,12 @@ public class Image {
 	}
 
 	public static void main(String[] args) {
+<<<<<<< HEAD:Code/projet_grp8/Image.java
 		File path = new File(
 				"/Users/oliviercai/Downloads/ImageL3-master/Test_Images/test.png");
+=======
+		File path = new File("C:\\Users\\willy\\Documents\\Licence_maths_info\\S6\\Image\\projetImage\\Projet_Image_Grp8\\Bdd\\model1.jpg");
+>>>>>>> master:Code/Image.java
 		BufferedImage img = null;
 
 		try {
