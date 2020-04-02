@@ -1,6 +1,5 @@
-package code;
+package projet_grp8;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import javax.swing.JLabel;
 public class Image {
 	public static void imshow(BufferedImage image) throws IOException {
 		// Instantiate JFrame
-		//hello
 		JFrame frame = new JFrame();
 
 		// Set Content to the JFrame
@@ -22,17 +20,18 @@ public class Image {
 		frame.setVisible(true);
 	}
 
-	public static void maintest(String[] args) {
-		File path = new File("C:\\Users\\willy\\Documents\\Licence_maths_info\\S6\\Image\\projetImage\\Projet_Image_Grp8\\Bdd\\model1.jpg");
+	public static void main(String[] args) {
+		File path = new File(
+				"/Users/oliviercai/Downloads/ImageL3-master/Test_Images/test.png");
 		BufferedImage img = null;
-		
+
 		try {
 			img = ImageIO.read(path);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
 			imshow(img);
 		} catch (IOException e) {
@@ -40,5 +39,4 @@ public class Image {
 			e.printStackTrace();
 		}
 	}
-	
 }
