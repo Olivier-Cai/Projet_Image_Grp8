@@ -1,14 +1,12 @@
 package projet_grp8;
 
 import java.io.*;
-import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.image.BufferedImage;
-import java.util.Scanner;
 import java.lang.Math;
 
 import java.io.File;
