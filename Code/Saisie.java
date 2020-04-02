@@ -1,11 +1,15 @@
-package code.java;
+package Code;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Saisie {
-	//Méthodes
+	/**
+	 * recupere le message depuis la console
+	 * @param message
+	 * @return
+	 */
 	public static String lireChaine(String message){
 	 	String ligne = null;
 	 	try{
