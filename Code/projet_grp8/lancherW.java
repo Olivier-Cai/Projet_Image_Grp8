@@ -262,7 +262,6 @@ public class lancherW {
 		
 //		File path = new File("C:\\Users\\willi\\Desktop\\Image_TD\\escalier1.jpg");
 //		histogramme(path);
-
 		seuillageGris(); 
 		binarisation();
 		negative();
