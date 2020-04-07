@@ -42,6 +42,7 @@ private static BufferedImage bfi;
 	    surfaceImg.drawImage(bfi, null, null);      
 	    bfi = imgBinaire;
 	    
+	    
 	    int width = bfi.getWidth();
 	    int height = bfi.getHeight();
 	    int[]tabHeight=new int[height];
