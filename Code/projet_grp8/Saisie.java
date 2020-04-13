@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Class de saisie de string, int ou float
+ * @author willy
+ *
+ */
 public class Saisie {
 	//Méthodes
 	public static String lireChaine(String message){

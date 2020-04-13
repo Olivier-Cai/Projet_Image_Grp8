@@ -1,5 +1,12 @@
 package projet_grp8;
 
+
+/**
+ * Class permettant le trace d'un histograme en fonction du nombre d'apparition
+ *  de pixel sur une nuance de gris allant de 0 a 255
+ * @author willy
+ *
+ */
 public class Histogram {
 	private int[] values;
 	private int   total;
