@@ -6,23 +6,22 @@ import java.io.*;
 import java.util.Arrays;
 import javax.imageio.*;
 /*
- * Author: Shenbaga Prasanna,IT,SASTRA University;
- * Program: Median Filter To Reduce Noice in Image
- * Date: 9/7/2013
- * Logic: Captures the colour of 8 pixels around the target pixel.Including the target pixel there will be 9 pixels.
- *        Isolate the R,G,B values of each pixels and put them in an array.Sort the arrays.Get the Middle value of the array
- *        Which will be the Median of the color values in those 9 pixels.Set the color to the Target pixel and move on!
+ * https://github.com/praserocking/MedianFilter/blob/master/MedianFilter.java
  */
 class MedianFilter{
-	
-	public static void median(File path) throws IOException{                            //Input Photo File
+	/**
+	 * Filtre median qui prend 9 pixel, met dans un tableau, 
+	 * puis on prendre le pixel median qui va remplacer le pixel central
+	 * @param Buffered Image
+	 * @throws IOException
+	 */
+	public static void median(BufferedImage img) throws IOException{ 
+
         Color[] pixel=new Color[9];
         int[] R=new int[9];
         int[] B=new int[9];
         int[] G=new int[9];
-        
 //        File output=new File("output.jpg");
-        BufferedImage img=ImageIO.read(path);
         for(int i=1;i<img.getWidth()-1;i++)
             for(int j=1;j<img.getHeight()-1;j++)
             {

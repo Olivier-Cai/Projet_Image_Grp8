@@ -9,7 +9,7 @@ public class Image {
 private static BufferedImage bfi;
 	
 	public Image(BufferedImage bfi) {
-		this.bfi = bfi;
+		Image.bfi = bfi;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ private static BufferedImage bfi;
 	 * trace le graphique des pixels noir en fonction de l'image sur l'axe X et affiche le graph
 	 * @throws IOException
 	 */
-	public static void histoX () throws IOException {		
+	public void histoX () throws IOException {		
 		BufferedImage imgBinaire = new BufferedImage(bfi.getWidth(), bfi.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
 	    Graphics2D surfaceImg = imgBinaire.createGraphics();
 	    surfaceImg.drawImage(bfi, null, null);      
@@ -46,7 +46,6 @@ private static BufferedImage bfi;
 	    int width = bfi.getWidth();
 	    int height = bfi.getHeight();
 	    int[]tabHeight=new int[height];
-	    int[]tabWidth=new int[width];
 	    int sum = 0;
 	    
 	    for (int y=0; y<height; y++) { //histograme par ligne : axe X
@@ -87,7 +86,7 @@ private static BufferedImage bfi;
 	 * trace le graphique des pixels noir en fonction de l'image sur l'axe Y et affiche le graph
 	 * @throws IOException
 	 */
-	public static void histoY () throws IOException {		
+	public void histoY () throws IOException {		
 		BufferedImage imgBinaire = new BufferedImage(bfi.getWidth(), bfi.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
 	    Graphics2D surfaceImg = imgBinaire.createGraphics();
 	    surfaceImg.drawImage(bfi, null, null);      
@@ -95,7 +94,6 @@ private static BufferedImage bfi;
 	    
 	    int width = bfi.getWidth();
 	    int height = bfi.getHeight();
-	    int[]tabHeight=new int[height];
 	    int[]tabWidth=new int[width];
 	    int sum = 0;
 
@@ -117,5 +115,6 @@ private static BufferedImage bfi;
 		
 		Imshow.imshow(bi3);
 	    Imshow.imshow(bfi);
-	}
+	    
+	}	
 }
