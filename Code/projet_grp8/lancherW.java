@@ -260,8 +260,8 @@ public class lancherW {
 
 	public static void main(String[] args) throws IOException {
 		
-//		File path = new File("C:\\Users\\willi\\Desktop\\Image_TD\\escalier1.jpg");
-//		histogramme(path);
+		File path = new File("C:\\Users\\willi\\Desktop\\Image_TD\\escalier1.jpg");
+		histogramme(path);
 		seuillageGris(); 
 		binarisation();
 		negative();

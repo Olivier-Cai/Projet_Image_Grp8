@@ -94,7 +94,7 @@ public class Main {
 	
 	public static void main (String[] args) throws IOException  {
 		//TODO: input image
-		File path = new File("C:\\Users\\willy\\Documents\\Licence_maths_info\\S6\\Image\\projetImage\\model1.jpg");
+		File path = new File("/Bdd/model1.jpg");
 		BufferedImage img = null;
 		img = ImageIO.read(path);
 		//TODO: fonction nuace gris
