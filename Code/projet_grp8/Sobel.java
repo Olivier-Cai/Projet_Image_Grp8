@@ -1,10 +1,6 @@
 package projet_grp8;
 
-import java.io.*;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import java.awt.image.BufferedImage;
 import java.lang.Math;
@@ -12,29 +8,77 @@ import java.lang.Math;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class de filtre de Sobel
+ * @author willy
+ *
+ */
 public class Sobel {
 
-	public static void imshow(BufferedImage image) throws IOException {
-		//Encoding the image 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write( image, "jpg", baos );
+	public static void sobel(BufferedImage bfi) {
+		int x = bfi.getWidth();
+		int y = bfi.getHeight();
 
-		//Storing the encoded Mat in a byte array 
-		byte[] byteArray = baos.toByteArray(); 
+		int maxGval = 0;
+		int[][] edgeColors = new int[x][y];
+		int maxGradient = -1;
 
-		//Preparing the Buffered Image 
-		InputStream in = new ByteArrayInputStream(byteArray); 
-		BufferedImage bufImage = ImageIO.read(in); 
+		for (int i = 1; i < x - 1; i++) {
+			for (int j = 1; j < y - 1; j++) {
 
-		//Instantiate JFrame 
-		JFrame frame = new JFrame(); 
+				int val00 = getGrayScale(bfi.getRGB(i - 1, j - 1));
+				int val01 = getGrayScale(bfi.getRGB(i - 1, j));
+				int val02 = getGrayScale(bfi.getRGB(i - 1, j + 1));
 
-		//Set Content to the JFrame 
-		frame.getContentPane().add(new JLabel(new ImageIcon(bufImage))); 
-		frame.pack(); 
-		frame.setVisible(true);
+				int val10 = getGrayScale(bfi.getRGB(i, j - 1));
+				int val11 = getGrayScale(bfi.getRGB(i, j));
+				int val12 = getGrayScale(bfi.getRGB(i, j + 1));
+				int val20 = getGrayScale(bfi.getRGB(i + 1, j - 1));
+				int val21 = getGrayScale(bfi.getRGB(i + 1, j));
+				int val22 = getGrayScale(bfi.getRGB(i + 1, j + 1));
+
+				int gx =  ((-1 * val00) + (0 * val01) + (1 * val02)) 
+						+ ((-2 * val10) + (0 * val11) + (2 * val12))
+						+ ((-1 * val20) + (0 * val21) + (1 * val22));
+
+				int gy =  ((-1 * val00) + (-2 * val01) + (-1 * val02))
+						+ ((0 * val10) + (0 * val11) + (0 * val12))
+						+ ((1 * val20) + (2 * val21) + (1 * val22));
+
+				double gval = Math.sqrt((gx * gx) + (gy * gy));
+				int g = (int) gval;
+
+				if(maxGradient < g) {
+					maxGradient = g;
+				}
+
+				edgeColors[i][j] = g;
+			}
+		}
+
+		double scale = 255.0 / maxGradient;
+
+		for (int i = 1; i < x - 1; i++) {
+			for (int j = 1; j < y - 1; j++) {
+				int edgeColor = edgeColors[i][j];
+				edgeColor = (int)(edgeColor * scale);
+				edgeColor = 0xff000000 | (edgeColor << 16) | (edgeColor << 8) | edgeColor;
+
+				bfi.setRGB(i, j, edgeColor);
+			}
+		}
+		try {
+			Imshow.imshow(bfi);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//  File outputfile = new File("sobel.png");
+		//  ImageIO.write(image, "png", outputfile);
+
+		System.out.println("max : " + maxGradient);
+		System.out.println("Finished");
 	}
-
 	public static void main(String args[]) throws IOException {
 
 		System.out.println("Started");
@@ -98,7 +142,7 @@ public class Sobel {
 				image.setRGB(i, j, edgeColor);
 			}
 		}
-		imshow(image);
+		Imshow.imshow(image);
 		//  File outputfile = new File("sobel.png");
 		//  ImageIO.write(image, "png", outputfile);
 

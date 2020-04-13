@@ -1,8 +1,16 @@
 package projet_grp8;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+/**
+ * Class permettant de modifier le visuel d'une image
+ * @author willy
+ *
+ */
 public class ImageColoring {
 
 	/**
@@ -63,7 +71,7 @@ public class ImageColoring {
 	 * change la luminosité
 	 * @param cmd
 	 */
-	public static void brightness(int cmd, BufferedImage bfi) {
+	public static BufferedImage brightness(int cmd, BufferedImage bfi) {
 		System.out.println("je recois :"+cmd);
 	    int width = bfi.getWidth();
 	    int height = bfi.getHeight();
@@ -107,6 +115,7 @@ public class ImageColoring {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return bfi;
 	}
 	/**
 	 * cette methode evite de faire dapasser les valeur min et max car cela peut cree un pb
@@ -121,5 +130,64 @@ public class ImageColoring {
 		else rgb = rgb + bright;
 		
 		return rgb;
+	}
+	
+	public static BufferedImage seuillageControle(BufferedImage bfi, File path) {
+		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
+//		int r = (p>>16)&0xff; 
+		int g = (p>>8)&0xff; 
+//		int b = p&0xff; 
+		boolean quit=false;
+		int seuil; //compris entre 0 et 255
+//		int seuilMax; //si nessecite un encadrement
+		int[] couleurNoir = {0, 0, 0, 255}; //couleur noir
+	    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
+	    
+	    BufferedImage imgSeuil = null;
+		try {
+			imgSeuil = ImageIO.read(path);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	    boolean premierValeur = true; //necessaire pour entrer au moins un premier seuil
+	    while(!quit) {
+			System.out.println("choisisser un seuil entre 0 et 255 ou une autre valeur pour quitter");
+			seuil = Saisie.lireEntier("Valeur de seuil ?");
+			if(seuil >= 0 && seuil <= 255) {	
+			System.out.println("vous avez choisis : "+seuil);
+	
+				for(int x=0; x<bfi.getWidth(); x++) { //
+					for(int y=0; y<bfi.getHeight(); y++) {
+						p = bfi.getRGB(x, y);
+						g = (p>>8)&0xff; 
+						
+						if(g < seuil) {
+							imgSeuil.getRaster().setPixel(x, y, couleurNoir);
+						}
+						else {
+							imgSeuil.getRaster().setPixel(x, y, couleurBlanc);
+		        			
+		        		}
+					}
+				}
+				premierValeur = false;
+				try {
+					Imshow.imshow(imgSeuil);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (premierValeur) {
+				quit = false;
+			}
+			else {
+				quit = true;
+			}
+		}
+	    System.out.println("vous avez quitté voici le résultat de l'image");
+	    return imgSeuil;
 	}
 }

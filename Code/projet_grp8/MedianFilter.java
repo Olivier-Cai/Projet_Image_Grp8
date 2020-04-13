@@ -5,10 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
 import javax.imageio.*;
-/*
- * https://github.com/praserocking/MedianFilter/blob/master/MedianFilter.java
+//https://github.com/praserocking/MedianFilter/blob/master/MedianFilter.java
+
+/**
+ * Class de filtre median sur une case de 3x3
+ * @author willy
+ *
  */
 class MedianFilter{
+	
 	/**
 	 * Filtre median qui prend 9 pixel, met dans un tableau, 
 	 * puis on prendre le pixel median qui va remplacer le pixel central
