@@ -23,61 +23,6 @@ import javax.swing.JLabel;
 
 public class Lancher {
 	
-	public static void imshow(BufferedImage image) throws IOException {
-	      //Instantiate JFrame 
-	      JFrame frame = new JFrame(); 
-
-	      //Set Content to the JFrame 
-	      frame.getContentPane().add(new JLabel(new ImageIcon(image))); 
-	      frame.pack(); 
-	      frame.setVisible(true);
-	 }
-	
-	static BufferedImage bresenham(BufferedImage img, int x1, int y1, int x2, int y2, Color c) 
-	{ 
-		int m_new = 2 * (y2 - y1); 
-		int slope_error_new = m_new - (x2 - x1); 
-
-		for (int x = x1, y = y1; x <= x2; x++) 
-		{ 
-			//System.out.print("(" +x + "," + y + ")\n"); 
-			img.setRGB(x, y, c.getRGB());
-			// Add slope to increment angle formed 
-			slope_error_new += m_new; 
-
-			// Slope error reached limit, time to 
-			// increment y and update slope error. 
-			if (slope_error_new >= 0) 
-			{ 
-				y++; 
-				slope_error_new -= 2 * (x2 - x1); 
-			} 
-		} 
-		return img;
-	}
-	
-	static BufferedImage drawRect(BufferedImage img, int x1, int y1, int x2, int y2, Color c) 
-	{ 
-		int width  = img.getWidth();
-		int height = img.getHeight();
-		
-		if (x1 > height && x2 > height) {
-			throw new java.lang.Error("x1 ou x2 sont superieur a la hauteur de l'image");
-		}
-		
-		if (y1 > width && y2 > width) {
-			throw new java.lang.Error("y1 ou y2 sont superieur a la largeur de l'image");
-		}
-		
-		for (int x = x1; x < x2; x++) {
-            for (int y = y1; y < y2 ; y++) {
-            	img.setRGB(x, y, c.getRGB());
-            }
-        }
-		
-		return img;
-	}
-	
 	static BufferedImage zeros(int height, int width) {
 		
 		int[] noir = {0,0,0,255};
@@ -109,44 +54,17 @@ public class Lancher {
 			e1.printStackTrace();
 		}
 		
-		img = seuiller(img, 245);
+		img = ImgController.seuillage(img, 245);
+		img = ErosionDilatation.erode(img, 7);
 		BufferedImage cc = Label8.getCC(img);
 		Label8.getNumberOfCC(cc);
 		
-		imshow(img);
-		imshow(cc);
+		Imshow.imshow(img);
+		Imshow.imshow(cc);
 		
 	}
 	
-	/**
-	 * 
-	 * @param img : image à seuiller pour donner une image NB
-	 * @param s : le seuil
-	 * @return
-	 */
-	public static BufferedImage seuiller(BufferedImage img, int s) {
-		int rows = img.getHeight();
-		int cols = img.getWidth();
-		
-		BufferedImage im_thresh = new BufferedImage(cols, rows, BufferedImage.TYPE_INT_RGB);
-		
-		
-		int[] noir = {0,0,0,255};
-		int[] blanc = {255,255,255,255};
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				int pixel = img.getRGB(j, i);
-				int red = (pixel >> 16) & 0xff;
-				if (red > s) {
-					im_thresh.getRaster().setPixel(j, i, noir);
-				}else {
-					im_thresh.getRaster().setPixel(j, i,blanc );
-				}
-			}
-		}
-		
-		return im_thresh;
-	}
+	
 	
 	public static BufferedImage getFloatBuuffredImage(int w, int h) {
         int bands = 1; // 4 bands for ARGB, 3 for RGB etc
@@ -215,29 +133,23 @@ public class Lancher {
 		return output;
 	}
 	
-	public static void testMorphMath() throws Exception {
-		File path = new File("C:\\Users\\willy\\Documents\\Licence_maths_info\\S6\\Image\\TD\\ImageL3-master\\ImageL3-master\\Test_Images\\shapesGray.jpg");
+	public static BufferedImage testMorphMath(BufferedImage bfi) throws Exception {
 
-		BufferedImage img = null, binaire = null, img_erode = null, img_dilate = null;
+		BufferedImage img_erode = null, img_dilate = null;
+		BufferedImage imgRes = null;
+		bfi = ImgController.seuillage(bfi, 240);
 		
-		try {
-			img = ImageIO.read(path);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		binaire = seuiller(img, 240);
-		
-		imshow(binaire);
+		Imshow.imshow(bfi);
 		
 		int r = 7; // le rayon de l'élément structurant
 		
-		img_erode = ErosionDilatation.erode(binaire, r);
-		imshow(img_erode);
+		img_erode = ErosionDilatation.erode(bfi, r);
+//		Imshow.imshow(img_erode);
 		
-		img_dilate = ErosionDilatation.dilate(binaire, r);
-		imshow(img_dilate);
+		img_dilate = ErosionDilatation.dilate(bfi, r);
+//		Imshow.imshow(img_dilate);
+		
+		return img_erode;
 	}
 	
 	public static void main(String[] args) throws Exception {

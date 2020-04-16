@@ -15,30 +15,72 @@ public class Main {
 	
 	public static void main (String[] args) throws IOException  {
 		//TODO: input image
-		File path = new File("C:\\Users\\willy\\git\\Projet_Image_Grp8\\Bdd\\escalier1.jpg");
+		File file = new File("Bdd" + File.separator+"escalier2.jpg"); 
 		BufferedImage img = null;
-		img = ImageIO.read(path);
+		img = ImageIO.read(file);
 
-		BufferedImage imgOne = ImageColoring.gris(img);
-		imgOne = ImageColoring.seuillageControle(imgOne, path);
-		imgOne = MedianFilter.median(imgOne);
+
+		//test
+		BufferedImage imgOne = ImgController.gris(img);
+		float seuil = Otsu.otsu(img);
+		imgOne = ImgController.seuillage(imgOne, seuil);
+
+		imgOne = ImgController.inverseBinary(imgOne);
 		Imshow.imshow(imgOne);
-		imgOne = ImageColoring.inverseBinary(imgOne);
+		imgOne = MedianFilter.median(imgOne); 
 		Imshow.imshow(imgOne);
+
 		
+
 		
-		BufferedImage imgTwo = Sobel.sobel(img);
-		imgTwo = MedianFilter.median(imgTwo); 
-		Imshow.imshow(imgTwo);
+//		BufferedImage imgTwo = Sobel.sobel(img);
+//		imgTwo = MedianFilter.median(imgTwo); 
+//		Imshow.imshow(imgTwo);
+//		BufferedImage imgFinal = ImgController.fusionImgEtSobel(imgOne, imgTwo);
+//		Imshow.imshow(imgFinal);
 		
-		BufferedImage imgFinal = ImageColoring.fusionImgEtSobel(imgOne, imgTwo);
+//		BufferedImage imgMedian = MedianFilter.median(imgFinal);
+//		Imshow.imshow(imgMedian);
 		
-		Imshow.imshow(imgFinal);
+//		BufferedImage imgErode = ErosionDilatation.erode(imgFinal, 7);
+//		Imshow.imshow(imgErode);
+//		
+//		BufferedImage imgSobel = ImgController.fusionImgEtSobel(imgErode, imgTwo);
+//		Imshow.imshow(imgSobel);
+//		
+//		BufferedImage imgDilate = ErosionDilatation.dilate(imgErode, 7);
+//		Imshow.imshow(imgDilate);
+		
+//		
+//		try {
+//			imgOne = Lancher.testMorphMath(imgOne);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		imgOne = ImageColoring.inverseBinary(imgOne);
+		
+		//TODO [ok] : methode gris > seuillage > median > inverse NB > sobel + img
+//		File file = new File("Bdd" + File.separator+"escalier1.jpg"); 
+//		BufferedImage img = null;
+//		img = ImageIO.read(file);
+//		BufferedImage imgOne = ImgController.gris(img);
+//		imgOne = ImgController.seuillageControle(imgOne, file);
+//		imgOne = MedianFilter.median(imgOne);
+//		Imshow.imshow(imgOne);
+//		imgOne = ImgController.inverseBinary(imgOne);
+//		Imshow.imshow(imgOne);
+//		BufferedImage imgTwo = Sobel.sobel(img);
+//		imgTwo = MedianFilter.median(imgTwo); 
+//		Imshow.imshow(imgTwo);
+//		BufferedImage imgFinal = ImgController.fusionImgEtSobel(imgOne, imgTwo);
+//		Imshow.imshow(imgFinal);
+		
 		//TODO [en cours]: filtre de sobel
 //		Sobel.sobel(img);
 		
 		//TODO [ok]: methode nuace de gris 
-//		img = ImageColoring.gris(img);
+//		img = ImgController.gris(img);
 	
 		//TODO: supression de bruit, amelioration de la qualite des marche 
 		// de l'escalier pour faciliter la reconnaissante du seuil 
@@ -56,7 +98,7 @@ public class Main {
 //			System.out.println("Quitter :                 3");
 //			System.out.println("############################");
 //			cmd = Saisie.lireEntier("Votre choix ? ");
-//			ImageColoring.brightness(cmd, img);
+//			ImgController.luminosite(cmd, img);
 //			nbdefois ++;
 //		}while ( cmd!=3);
 //		System.out.println("vous avez quitté, il y'a eu "+nbdefois+" modification");
@@ -64,7 +106,7 @@ public class Main {
 
 		//TODO [ok]: faire saisir les valeurs pour que l'user puisse changer le seuil a sa convenance jusqu'a qu'il quitte
 		//TODO [ok]: seuillage pour differencier la marche en noir -> on aura une image en NB
-//		BufferedImage imgSeuil = ImageColoring.seuillageControle(img, path);
+//		BufferedImage imgSeuil = ImgController.seuillageControle(img, path);
       
 		//TODO [ok]:histogram par ligne et par colonne
 //        Image ima2 = new Image(imgSeuil);

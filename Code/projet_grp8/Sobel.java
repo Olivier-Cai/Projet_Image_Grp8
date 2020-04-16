@@ -34,13 +34,13 @@ public class Sobel {
 				int val21 = getGrayScale(bfi.getRGB(i + 1, j));
 				int val22 = getGrayScale(bfi.getRGB(i + 1, j + 1));
 
-				int gx =  ((-1 * val00) + (0 * val01) + (1 * val02)) 
-						+ ((-2 * val10) + (0 * val11) + (2 * val12))
-						+ ((-1 * val20) + (0 * val21) + (1 * val22));
+				int gx =  ((1 * val00) + (0 * val01) + (-1 * val02)) 
+						+ ((2 * val10) + (0 * val11) + (-2 * val12))
+						+ ((1 * val20) + (0 * val21) + (-1 * val22));
 
-				int gy =  ((-1 * val00) + (-2 * val01) + (-1 * val02))
+				int gy =  ((1 * val00) + (2 * val01) + (1 * val02))
 						+ ((0 * val10) + (0 * val11) + (0 * val12))
-						+ ((1 * val20) + (2 * val21) + (1 * val22));
+						+ ((-1 * val20) + (-2 * val21) + (-1 * val22));
 
 				double gval = Math.sqrt((gx * gx) + (gy * gy));
 				int g = (int) gval;

@@ -11,34 +11,7 @@ import javax.imageio.ImageIO;
  * @author willy
  *
  */
-public class ImageColoring {
-
-	/**
-	 * tranforme l'image de couleur en nuance de gris
-	 * @param BufferedImage bfi
-	 * @return
-	 * @throws IOException 
-	 */
-	public static BufferedImage imGrey (BufferedImage bfi) throws IOException {
-		//TODO: je ne sais pas si ca marche 
-		System.out.println("image en nuace de gris");
-		int tab[] = new int[256];
-		for (int i=0; i<tab.length; i++ ) {
-			tab[i]=0;
-		}		
-		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
-		int g = (p>>8)&0xff; 
-		for(int x=0; x<bfi.getWidth(); x++) { //recherche de chaque nuance de gris
-			for(int y=0; y<bfi.getHeight(); y++) {
-				p = bfi.getRGB(x, y);
-				g = (p>>8)&0xff; 
-				//        		System.out.println("valeur de g "+g);
-				tab[g]= tab[g]+1;
-			}
-		}
-		return bfi;
-	}
-	
+public class ImgController {
 	
 	/**
 	 * tranforme l'image de couleur en nuance de gris
@@ -69,7 +42,7 @@ public class ImageColoring {
 	 * change la luminosité
 	 * @param cmd
 	 */
-	public static BufferedImage brightness(int cmd, BufferedImage bfi) {
+	public static BufferedImage luminosite(int cmd, BufferedImage bfi) {
 		System.out.println("je recois :"+cmd);
 	    int width = bfi.getWidth();
 	    int height = bfi.getHeight();
@@ -141,6 +114,37 @@ public class ImageColoring {
 	
 	/**
 	 * 
+	 * @param img : image à seuiller pour donner une image NB
+	 * @param s : le seuil en float
+	 * @return
+	 */
+	public static BufferedImage seuillage(BufferedImage img, float s) {
+		int rows = img.getHeight();
+		int cols = img.getWidth();
+		
+		BufferedImage im_thresh = new BufferedImage(cols, rows, BufferedImage.TYPE_INT_RGB);
+		
+		
+		int[] noir = {0,0,0,255};
+		int[] blanc = {255,255,255,255};
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				int pixel = img.getRGB(j, i);
+				int red = (pixel >> 16) & 0xff;
+				if (red > s) {
+					im_thresh.getRaster().setPixel(j, i, noir);
+				}else {
+					im_thresh.getRaster().setPixel(j, i,blanc );
+				}
+			}
+		}
+		
+		return im_thresh;
+	}
+	
+	
+	/**
+	 * 
 	 * @param bfi
 	 * @param path
 	 * @return
@@ -178,10 +182,10 @@ public class ImageColoring {
 						g = (p>>8)&0xff; 
 						
 						if(g < seuil) {
-							imgSeuil.getRaster().setPixel(x, y, couleurNoir);
+							imgSeuil.getRaster().setPixel(x, y, couleurBlanc);
 						}
 						else {
-							imgSeuil.getRaster().setPixel(x, y, couleurBlanc);
+							imgSeuil.getRaster().setPixel(x, y, couleurNoir);
 		        			
 		        		}
 					}
