@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
-import javax.imageio.*;
+
 //https://github.com/praserocking/MedianFilter/blob/master/MedianFilter.java
 
 /**
@@ -18,9 +18,10 @@ class MedianFilter{
 	 * Filtre median qui prend 9 pixel, met dans un tableau, 
 	 * puis on prendre le pixel median qui va remplacer le pixel central
 	 * @param Buffered Image
+	 * @return 
 	 * @throws IOException
 	 */
-	public static void median(BufferedImage img) throws IOException{ 
+	public static BufferedImage median(BufferedImage img) throws IOException{ 
 
         Color[] pixel=new Color[9];
         int[] R=new int[9];
@@ -49,7 +50,8 @@ class MedianFilter{
                Arrays.sort(B);
                img.setRGB(i,j,new Color(R[4],B[4],G[4]).getRGB());
             }
-        Imshow.imshow(img);
 //        ImageIO.write(img,"jpg",output);
+		return img;
+        
     }
 }

@@ -111,7 +111,7 @@ public class Egalisation {
 	}
 	
 	public static void egalisation2(File f) {
-		int k = 0;
+//		int k = 0;
 		int x = 0; 
 		int y = 0; 
 		int tab[] = new int[512];

@@ -15,45 +15,44 @@ public class ImageColoring {
 
 	/**
 	 * tranforme l'image de couleur en nuance de gris
-	 * @param img
+	 * @param BufferedImage bfi
 	 * @return
 	 * @throws IOException 
 	 */
-	public static BufferedImage imGrey (BufferedImage img) throws IOException {
+	public static BufferedImage imGrey (BufferedImage bfi) throws IOException {
 		//TODO: je ne sais pas si ca marche 
 		System.out.println("image en nuace de gris");
 		int tab[] = new int[256];
 		for (int i=0; i<tab.length; i++ ) {
 			tab[i]=0;
 		}		
-		int p = img.getRGB(0,0); //récuperer le pixel à coordonné x et y
+		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 		int g = (p>>8)&0xff; 
-		for(int x=0; x<img.getWidth(); x++) { //recherche de chaque nuance de gris
-			for(int y=0; y<img.getHeight(); y++) {
-				p = img.getRGB(x, y);
+		for(int x=0; x<bfi.getWidth(); x++) { //recherche de chaque nuance de gris
+			for(int y=0; y<bfi.getHeight(); y++) {
+				p = bfi.getRGB(x, y);
 				g = (p>>8)&0xff; 
 				//        		System.out.println("valeur de g "+g);
 				tab[g]= tab[g]+1;
 			}
 		}
-		Imshow.imshow(img);
-		return img;
+		return bfi;
 	}
 	
 	
 	/**
 	 * tranforme l'image de couleur en nuance de gris
-	 * @param img
+	 * @param bfi
 	 * @return
 	 * @throws IOException 
 	 */
-	public static BufferedImage gris(BufferedImage img) throws IOException {
-		int p = img.getRGB(0,0); //récuperer le pixel à coordonné x et y
+	public static BufferedImage gris(BufferedImage bfi) throws IOException {
+		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 		int g = (p>>8)&0xff; 
 		
-		for(int x=0; x<img.getWidth(); x++) { //
-			for(int y=0; y<img.getHeight(); y++) {
-				p = img.getRGB(x, y);
+		for(int x=0; x<bfi.getWidth(); x++) { //
+			for(int y=0; y<bfi.getHeight(); y++) {
+				p = bfi.getRGB(x, y);
 				g = (p>>8)&0xff; 
 				
 				//assombrir une image "-", eclaircir "+"
@@ -61,11 +60,10 @@ public class ImageColoring {
 					g=0;
 				}
 				int[] gris = {g, g, g, 255};
-				img.getRaster().setPixel(x, y, gris);
+				bfi.getRaster().setPixel(x, y, gris);
 			}
 		}
-		Imshow.imshow(img);
-		return img;
+		return bfi;
 	}
 	/**
 	 * change la luminosité
@@ -90,12 +88,6 @@ public class ImageColoring {
 		default:
 			System.out.println("Commande invalide, choisissez + ou -");
 		}
-		try {
-			Imshow.imshow(bfi);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		//si la valeur de pixel est trop petit <10 on a 0 ou trop grand >245 on a 255
 		for(int x = 0;  x < width; x++) {
 	       for(int y = 0; y < height; y++) {
@@ -109,11 +101,6 @@ public class ImageColoring {
 	    	   int [] newBright = {r, g, b, 255};
 	    	   bfi.getRaster().setPixel(x, y, newBright);
 	       }
-		}
-		try {
-			Imshow.imshow(bfi);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return bfi;
 	}
@@ -132,7 +119,34 @@ public class ImageColoring {
 		return rgb;
 	}
 	
-	public static BufferedImage seuillageControle(BufferedImage bfi, File path) {
+	public static BufferedImage inverseBinary(BufferedImage bfi) {
+		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
+		int g = (p>>8)&0xff; 
+		int[] couleurNoir = {0, 0, 0, 255}; //couleur noir
+	    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
+		for(int x=0; x<bfi.getWidth(); x++) { //
+			for(int y=0; y<bfi.getHeight(); y++) {
+				p = bfi.getRGB(x, y);
+				g = (p>>8)&0xff; 
+				
+				if(g>=240) {
+					bfi.getRaster().setPixel(x, y, couleurNoir);
+				}else
+					bfi.getRaster().setPixel(x, y, couleurBlanc);
+			}
+		}
+		return bfi;
+		
+	}
+	
+	/**
+	 * 
+	 * @param bfi
+	 * @param path
+	 * @return
+	 * @throws IOException 
+	 */
+	public static BufferedImage seuillageControle(BufferedImage bfi, File path) throws IOException {
 		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 //		int r = (p>>16)&0xff; 
 		int g = (p>>8)&0xff; 
@@ -172,13 +186,8 @@ public class ImageColoring {
 		        		}
 					}
 				}
+			    Imshow.imshow(imgSeuil);
 				premierValeur = false;
-				try {
-					Imshow.imshow(imgSeuil);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 			else if (premierValeur) {
 				quit = false;
@@ -188,6 +197,45 @@ public class ImageColoring {
 			}
 		}
 	    System.out.println("vous avez quitté voici le résultat de l'image");
+
 	    return imgSeuil;
+	}
+	
+	/**
+	 * prend une image initiale bfi en NB et une image en sobel bfj, puis transpose les contours blanc uniquement de bfj à bfi 
+	 * @param BufferedImage bfi
+	 * @param BufferedImagebfj
+	 * @return fusion des deux image avec un parametre particulier
+	 */
+	public static BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage bfj) {
+		int widthbfi = bfi.getWidth();
+	    int heightbfi = bfi.getHeight();
+	    
+		int widthbfj = bfj.getWidth();
+	    int heightbfj = bfj.getHeight();
+	    
+	    if(widthbfi != widthbfj || heightbfi != heightbfj) {
+	    	System.out.println("les deux images n'ont pas la même dimension");
+	    	return bfi; 
+	    }
+	    
+		int pj = bfj.getRGB(0,0); //récuperer le pixel pour image de sobel
+		int rj = (pj>>16)&0xff; 
+		
+	    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
+	    
+		for(int x = 0;  x < widthbfi; x++) {
+		       for(int y = 0; y < heightbfi; y++) {
+		    	   pj = bfj.getRGB(x, y);
+		    	   
+		    	   rj = (pj>>16)&0xff;
+		    	   
+		    	   if(rj >= 25) {
+		    		   bfi.getRaster().setPixel(x, y, couleurBlanc);
+		    	   }
+		       }
+			}
+		
+		return bfi;
 	}
 }
