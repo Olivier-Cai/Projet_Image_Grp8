@@ -19,7 +19,7 @@ public class ImgController {
 	 * @return
 	 * @throws IOException 
 	 */
-	public static BufferedImage gris(BufferedImage bfi) throws IOException {
+	public BufferedImage gris(BufferedImage bfi) throws IOException {
 		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 		int g = (p>>8)&0xff; 
 		
@@ -40,9 +40,9 @@ public class ImgController {
 	}
 	/**
 	 * change la luminosité
-	 * @param cmd
+	 * @param cmd : commande + ou - sur la console
 	 */
-	public static BufferedImage luminosite(int cmd, BufferedImage bfi) {
+	public BufferedImage luminosite(int cmd, BufferedImage bfi) {
 		System.out.println("je recois :"+cmd);
 	    int width = bfi.getWidth();
 	    int height = bfi.getHeight();
@@ -92,7 +92,7 @@ public class ImgController {
 		return rgb;
 	}
 	
-	public static BufferedImage inverseBinary(BufferedImage bfi) {
+	public BufferedImage inverseBinary(BufferedImage bfi) {
 		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 		int g = (p>>8)&0xff; 
 		int[] couleurNoir = {0, 0, 0, 255}; //couleur noir
@@ -118,7 +118,7 @@ public class ImgController {
 	 * @param s : le seuil en float
 	 * @return
 	 */
-	public static BufferedImage seuillage(BufferedImage img, float s) {
+	public BufferedImage seuillage(BufferedImage img, float s) {
 		int rows = img.getHeight();
 		int cols = img.getWidth();
 		
@@ -150,7 +150,7 @@ public class ImgController {
 	 * @return
 	 * @throws IOException 
 	 */
-	public static BufferedImage seuillageControle(BufferedImage bfi, File path) throws IOException {
+	public BufferedImage seuillageControle(BufferedImage bfi, File path) throws IOException {
 		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 //		int r = (p>>16)&0xff; 
 		int g = (p>>8)&0xff; 
@@ -207,39 +207,39 @@ public class ImgController {
 	
 	/**
 	 * prend une image initiale bfi en NB et une image en sobel bfj, puis transpose les contours blanc uniquement de bfj à bfi 
-	 * @param BufferedImage bfi
-	 * @param BufferedImagebfj
+	 * @param BufferedImage bfi : image a filtrer
+	 * @param BufferedImage bfj : sobel 
 	 * @return fusion des deux image avec un parametre particulier
 	 */
-	public static BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage bfj) {
+	public BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage imgSobel) {
 		int widthbfi = bfi.getWidth();
 	    int heightbfi = bfi.getHeight();
 	    
-		int widthbfj = bfj.getWidth();
-	    int heightbfj = bfj.getHeight();
+		int widthbfj = imgSobel.getWidth();
+	    int heightbfj = imgSobel.getHeight();
 	    
 	    if(widthbfi != widthbfj || heightbfi != heightbfj) {
 	    	System.out.println("les deux images n'ont pas la même dimension");
-	    	return bfi; 
+	    	
 	    }
-	    
-		int pj = bfj.getRGB(0,0); //récuperer le pixel pour image de sobel
-		int rj = (pj>>16)&0xff; 
-		
-	    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
-	    
-		for(int x = 0;  x < widthbfi; x++) {
+	    else {
+	    	int pj = imgSobel.getRGB(0,0); //récuperer le pixel pour image de sobel
+			int rj = (pj>>16)&0xff; 
+			
+		    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
+		    
+			for(int x = 0;  x < widthbfi; x++) {
 		       for(int y = 0; y < heightbfi; y++) {
-		    	   pj = bfj.getRGB(x, y);
+		    	   pj = imgSobel.getRGB(x, y);
 		    	   
 		    	   rj = (pj>>16)&0xff;
 		    	   
-		    	   if(rj >= 25) {
+		    	   if(rj >= 55) {
 		    		   bfi.getRaster().setPixel(x, y, couleurBlanc);
 		    	   }
 		       }
 			}
-		
+	    }
 		return bfi;
 	}
 }

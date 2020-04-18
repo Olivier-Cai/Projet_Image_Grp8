@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class Sobel {
 
-	public static BufferedImage sobel(BufferedImage bfi) {
+	public BufferedImage sobel(BufferedImage bfi) {
 		int x = bfi.getWidth();
 		int y = bfi.getHeight();
 
@@ -30,6 +30,7 @@ public class Sobel {
 				int val10 = getGrayScale(bfi.getRGB(i, j - 1));
 				int val11 = getGrayScale(bfi.getRGB(i, j));
 				int val12 = getGrayScale(bfi.getRGB(i, j + 1));
+				
 				int val20 = getGrayScale(bfi.getRGB(i + 1, j - 1));
 				int val21 = getGrayScale(bfi.getRGB(i + 1, j));
 				int val22 = getGrayScale(bfi.getRGB(i + 1, j + 1));
@@ -67,8 +68,7 @@ public class Sobel {
 		//  File outputfile = new File("sobel.png");
 		//  ImageIO.write(image, "png", outputfile);
 
-		System.out.println("max : " + maxGradient);
-		System.out.println("Finished");
+//		System.out.println("max : " + maxGradient);
 		return bfi;
 	}
 
