@@ -151,8 +151,8 @@ public class LancherW {
 			e.printStackTrace();
 		}
 		
-//		MedianFilter.median(img);
-//		MedianFilter.median(img);
+        //MedianFilter.median(img);
+        //MedianFilter.median(img);
 	}
 	
 	public static void negative() {
@@ -307,7 +307,7 @@ public class LancherW {
 		BufferedImage img = null; 
 		File f = null; 
 
-		f = new File("C:\\Users\\willi\\Desktop\\Image_TD\\escalier2.jpg");
+		f = new File("C:\\Users\\willi\\Desktop\\Image_TD\\escalier1.jpg");
 		img = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
 		
 		try {
