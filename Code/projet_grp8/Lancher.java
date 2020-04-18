@@ -46,7 +46,7 @@ public class Lancher {
 		File path = new File("C:\\Users\\willy\\Documents\\Licence_maths_info\\S6\\Image\\TD\\ImageL3-master\\ImageL3-master\\Test_Images\\shapesGray.jpg");
 
 		BufferedImage img = null;
-		
+		ImgController ic = new ImgController();
 		try {
 			img = ImageIO.read(path);
 		} catch (IOException e1) {
@@ -54,7 +54,7 @@ public class Lancher {
 			e1.printStackTrace();
 		}
 		
-		img = ImgController.seuillage(img, 245);
+		img = ic.seuillage(img, 245);
 		img = ErosionDilatation.erode(img, 7);
 		BufferedImage cc = Label8.getCC(img);
 		Label8.getNumberOfCC(cc);
@@ -137,7 +137,9 @@ public class Lancher {
 
 		BufferedImage img_erode = null, img_dilate = null;
 		BufferedImage imgRes = null;
-		bfi = ImgController.seuillage(bfi, 240);
+		ImgController ic = new ImgController();
+		
+		bfi = ic.seuillage(bfi, 240);
 		
 		Imshow.imshow(bfi);
 		

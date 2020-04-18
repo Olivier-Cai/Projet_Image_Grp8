@@ -4,7 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Otsu {
 
-	public static float otsu(BufferedImage bf) {
+	private float seuilOtsu;
+	
+	public float otsu(BufferedImage bf) {
 
 		int width = bf.getWidth();
 		int height = bf.getHeight();
@@ -56,7 +58,10 @@ public class Otsu {
 				threshold = t;
 			}
 		}
-		System.out.println(threshold);
+		this.seuilOtsu = threshold;
 		return threshold;
+	}
+	public float getSeuilOtsu() {
+		return this.seuilOtsu;
 	}
 }

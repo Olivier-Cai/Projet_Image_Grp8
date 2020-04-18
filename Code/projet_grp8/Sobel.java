@@ -30,6 +30,7 @@ public class Sobel {
 				int val10 = getGrayScale(bfi.getRGB(i, j - 1));
 				int val11 = getGrayScale(bfi.getRGB(i, j));
 				int val12 = getGrayScale(bfi.getRGB(i, j + 1));
+				
 				int val20 = getGrayScale(bfi.getRGB(i + 1, j - 1));
 				int val21 = getGrayScale(bfi.getRGB(i + 1, j));
 				int val22 = getGrayScale(bfi.getRGB(i + 1, j + 1));

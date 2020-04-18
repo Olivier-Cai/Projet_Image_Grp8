@@ -6,7 +6,8 @@ import java.io.IOException;
 
 
 public class Image {
-private static BufferedImage bfi;
+	
+	private static BufferedImage bfi;
 	
 	public Image(BufferedImage bfi) {
 		Image.bfi = bfi;

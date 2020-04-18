@@ -17,37 +17,65 @@ public class Main {
 		//TODO: input image
 		File file = new File("Bdd" + File.separator+"escalier2.jpg"); 
 		BufferedImage img = null;
+	
+		// creation de class pour utiliser les methodes disponible
+		ImgController ic = new ImgController();
+		MedianFilter mf = new MedianFilter();
+		Imshow ims = new Imshow();
+		Otsu o = new Otsu();
+		Sobel sb = new Sobel();
+		
 		img = ImageIO.read(file);
-
+		
 
 		//test
-		BufferedImage imgOne = ImgController.gris(img);
-		float seuil = Otsu.otsu(img);
-		imgOne = ImgController.seuillage(imgOne, seuil);
+		BufferedImage imgOne = ic.gris(img);
 
-		imgOne = ImgController.inverseBinary(imgOne);
-		Imshow.imshow(imgOne);
-		imgOne = MedianFilter.median(imgOne); 
-		Imshow.imshow(imgOne);
+		//utile pour l'image sans bruit
+		float seuil = o.otsu(img);
+		System.out.println("otsu seuil : "+seuil);
+		imgOne = ic.seuillage(img, seuil); //image en NB avec un seuil auto grace a otsu()
+		
+//		ims.imshow(imgOne);
+		imgOne = ic.inverseBinary(imgOne); //les marche sont en noir
+		BufferedImage bj = mf.median(imgOne);  //supprime les bruit
+		imgOne = mf.median(bj); 
+
+		//utile pour enlever les bruit sur l'image initiale
+		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);
+//		ims.imshow(bj);
+
+		BufferedImage imgSobel = sb.sobel(img);
+		BufferedImage imgSobel2 = mf.median(imgSobel);
+//		ims.imshow(imgSobel2);
+		BufferedImage imgSobel5 = mf.median5(imgSobel);
+		
+		
+		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel2);
+		ims.imshow(imgFinal);
+		
+//		for(int i=0; i<20; i++) {
+//			imgTwo = MedianFilter.median(imgTwo); 
+//		}
 
 		
-
-		
-//		BufferedImage imgTwo = Sobel.sobel(img);
-//		imgTwo = MedianFilter.median(imgTwo); 
 //		Imshow.imshow(imgTwo);
 //		BufferedImage imgFinal = ImgController.fusionImgEtSobel(imgOne, imgTwo);
 //		Imshow.imshow(imgFinal);
-		
+//		for(int i=0; i<5; i++) {
+//			imgTwo = MedianFilter.median(imgFinal);
+//			
+//		}
+//		Imshow.imshow(imgFinal);
 //		BufferedImage imgMedian = MedianFilter.median(imgFinal);
 //		Imshow.imshow(imgMedian);
 		
-//		BufferedImage imgErode = ErosionDilatation.erode(imgFinal, 7);
+//		BufferedImage imgErode = ErosionDilatation.erode(imgFinal, 2);
 //		Imshow.imshow(imgErode);
-//		
+		
 //		BufferedImage imgSobel = ImgController.fusionImgEtSobel(imgErode, imgTwo);
 //		Imshow.imshow(imgSobel);
-//		
+
 //		BufferedImage imgDilate = ErosionDilatation.dilate(imgErode, 7);
 //		Imshow.imshow(imgDilate);
 		
