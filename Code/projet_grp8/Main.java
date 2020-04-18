@@ -15,20 +15,20 @@ public class Main {
 	
 	public static void main (String[] args) throws IOException  {
 		//TODO: input image
-		File file = new File("Bdd" + File.separator+"escalier2.jpg"); 
+		File file = new File("Bdd" + File.separator+"escalier21.jpg"); 
 		BufferedImage img = null;
 	
 		// creation de class pour utiliser les methodes disponible
 		ImgController ic = new ImgController();
 		MedianFilter mf = new MedianFilter();
-		Imshow ims = new Imshow();
 		Otsu o = new Otsu();
 		Sobel sb = new Sobel();
+		ErosionDilatation ed = new ErosionDilatation();
 		
 		img = ImageIO.read(file);
 		
 
-		//test
+		//test : gris > otsu > seuil > inverseColor > median > fusion sobel > median + dilate
 		BufferedImage imgOne = ic.gris(img);
 
 		//utile pour l'image sans bruit
@@ -36,57 +36,68 @@ public class Main {
 		System.out.println("otsu seuil : "+seuil);
 		imgOne = ic.seuillage(img, seuil); //image en NB avec un seuil auto grace a otsu()
 		
-//		ims.imshow(imgOne);
-		imgOne = ic.inverseBinary(imgOne); //les marche sont en noir
-		BufferedImage bj = mf.median(imgOne);  //supprime les bruit
-		imgOne = mf.median(bj); 
+		imgOne = ic.inverseBinary(imgOne); //les marche vont etre en noir
+		BufferedImage bj = mf.median(imgOne);  //supprime les bruits avec median
+		imgOne = mf.median(bj); //supprime une deuxieme fois les bruits avec median
 
 		//utile pour enlever les bruit sur l'image initiale
-		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);
-//		ims.imshow(bj);
-
-		BufferedImage imgSobel = sb.sobel(img);
-		BufferedImage imgSobel2 = mf.median(imgSobel);
-//		ims.imshow(imgSobel2);
-		BufferedImage imgSobel5 = mf.median5(imgSobel);
-		
-		
-		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel2);
-		ims.imshow(imgFinal);
-		
-//		for(int i=0; i<20; i++) {
-//			imgTwo = MedianFilter.median(imgTwo); 
-//		}
+//		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);		bj = mf.median(bj);
 
 		
-//		Imshow.imshow(imgTwo);
-//		BufferedImage imgFinal = ImgController.fusionImgEtSobel(imgOne, imgTwo);
-//		Imshow.imshow(imgFinal);
-//		for(int i=0; i<5; i++) {
-//			imgTwo = MedianFilter.median(imgFinal);
-//			
-//		}
-//		Imshow.imshow(imgFinal);
-//		BufferedImage imgMedian = MedianFilter.median(imgFinal);
-//		Imshow.imshow(imgMedian);
-		
-//		BufferedImage imgErode = ErosionDilatation.erode(imgFinal, 2);
-//		Imshow.imshow(imgErode);
-		
-//		BufferedImage imgSobel = ImgController.fusionImgEtSobel(imgErode, imgTwo);
-//		Imshow.imshow(imgSobel);
-
-//		BufferedImage imgDilate = ErosionDilatation.dilate(imgErode, 7);
-//		Imshow.imshow(imgDilate);
-		
+		//TODO : image fond noir avec trait blanc mais pas complet
+//		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image original
+//		BufferedImage imgSobel2 = mf.median(imgSobel); //suppression de bruit sur sobel lvl.3 (taille 3x3)
+//		Imshow.imshow(imgSobel2);
 //		
-//		try {
-//			imgOne = Lancher.testMorphMath(imgOne);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		imgOne = ImageColoring.inverseBinary(imgOne);
+//		//TODO : trouver un moyen d'accentuer les pixels clairs
+//		float seuilSobel = o.otsu(imgSobel);
+//		BufferedImage imgFinal = ic.seuillage(imgSobel2, seuilSobel);
+//		imgFinal = ic.inverseBinary(imgFinal);
+//		Imshow.imshow(imgFinal);
+		
+		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image originalXj
+		//augmente la taille pour appliquer le filtre median 5x5
+		bj = ic.inverseBinary(bj);
+		bj = mf.createBorder(bj);
+		bj = ic.inverseBinary(bj);
+		BufferedImage imgSobel5 = mf.median5(imgSobel); //suppression de bruit sur sobel lvl.5
+		
+		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel5); //applique les contours de sobel sur l'image bruite
+		//avec [55] de seuil resultat correcte
+		imgFinal=mf.median(imgFinal); //supression de bruit
+		imgFinal=mf.median(imgFinal);
+		imgFinal=mf.median(imgFinal);
+		//avec double application mediant, meilleur resultat
+
+
+		
+		//on realise une ouverture
+		//dilatation 
+		imgFinal=ed.dilate(imgFinal, 6);
+		//erode
+//		imgFinal=ed.erode(imgFinal, 3);
+//		Imshow.imshow(imgFinal);
+		imgFinal = mf.median(imgFinal);		imgFinal = mf.median(imgFinal);		imgFinal = mf.median(imgFinal);
+		Imshow.imshow(imgFinal);
+		System.out.println("fin du program");
+		
+		//test avec connexite
+		
+		Connexite co = new Connexite();
+		imgFinal = co.connexite(imgFinal);
+		int nbColora = Label8.getNumberOfCC(imgFinal);
+		System.err.println("taille de haut en bas :"+imgFinal.getHeight());
+		Imshow.imshow(imgFinal);
+		System.out.println("nombre de marche avec connexité: "+(nbColora-1));
+		
+		//test qui fonctionne ne pas toucher 
+//		imgFinal = ic.inverseBinary(imgFinal);
+//		BufferedImage cc = Label8.getCC(imgFinal);
+//		Imshow.imshow(cc);
+//		int nbColor = Label8.getNumberOfCC(cc);
+//		System.out.println("nombre de marche avec label8 : "+(nbColor-1));
+
+		
 		
 		//TODO [ok] : methode gris > seuillage > median > inverse NB > sobel + img
 //		File file = new File("Bdd" + File.separator+"escalier1.jpg"); 

@@ -211,35 +211,35 @@ public class ImgController {
 	 * @param BufferedImage bfj : sobel 
 	 * @return fusion des deux image avec un parametre particulier
 	 */
-	public BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage bfj) {
+	public BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage imgSobel) {
 		int widthbfi = bfi.getWidth();
 	    int heightbfi = bfi.getHeight();
 	    
-		int widthbfj = bfj.getWidth();
-	    int heightbfj = bfj.getHeight();
+		int widthbfj = imgSobel.getWidth();
+	    int heightbfj = imgSobel.getHeight();
 	    
 	    if(widthbfi != widthbfj || heightbfi != heightbfj) {
 	    	System.out.println("les deux images n'ont pas la même dimension");
-	    	return bfi; 
+	    	
 	    }
-	    
-		int pj = bfj.getRGB(0,0); //récuperer le pixel pour image de sobel
-		int rj = (pj>>16)&0xff; 
-		
-	    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
-	    
-		for(int x = 0;  x < widthbfi; x++) {
+	    else {
+	    	int pj = imgSobel.getRGB(0,0); //récuperer le pixel pour image de sobel
+			int rj = (pj>>16)&0xff; 
+			
+		    int[] couleurBlanc = {255, 255, 255, 255}; //pour donner la couleur blanche
+		    
+			for(int x = 0;  x < widthbfi; x++) {
 		       for(int y = 0; y < heightbfi; y++) {
-		    	   pj = bfj.getRGB(x, y);
+		    	   pj = imgSobel.getRGB(x, y);
 		    	   
 		    	   rj = (pj>>16)&0xff;
 		    	   
-		    	   if(rj >= 125) {
+		    	   if(rj >= 55) {
 		    		   bfi.getRaster().setPixel(x, y, couleurBlanc);
 		    	   }
 		       }
 			}
-		
+	    }
 		return bfi;
 	}
 }

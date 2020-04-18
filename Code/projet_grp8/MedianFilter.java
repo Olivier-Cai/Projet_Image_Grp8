@@ -34,17 +34,21 @@ class MedianFilter{
                pixel[0]=new Color(img.getRGB(i-1,j-1));
                pixel[1]=new Color(img.getRGB(i-1,j));
                pixel[2]=new Color(img.getRGB(i-1,j+1));
+               
                pixel[3]=new Color(img.getRGB(i,j+1));
                pixel[4]=new Color(img.getRGB(i+1,j+1));
                pixel[5]=new Color(img.getRGB(i+1,j));
+               
                pixel[6]=new Color(img.getRGB(i+1,j-1));
                pixel[7]=new Color(img.getRGB(i,j-1));
                pixel[8]=new Color(img.getRGB(i,j));
+               
                for(int k=0;k<9;k++){
                    R[k]=pixel[k].getRed();
                    B[k]=pixel[k].getBlue();
                    G[k]=pixel[k].getGreen();
                }
+               
                Arrays.sort(R);
                Arrays.sort(G);
                Arrays.sort(B);
@@ -129,7 +133,7 @@ class MedianFilter{
 	 * @param bfi : image a agrandir
 	 * @return
 	 */
-	static BufferedImage createBorder(BufferedImage bfi) {
+	BufferedImage createBorder(BufferedImage bfi) {
 		int bordure = 2;
 		int width = bfi.getWidth();
 		int height = bfi.getHeight();
