@@ -39,7 +39,7 @@ public class Egalisation {
 	 * Egalisation de l'image du fichier f
 	 * @param f 
 	 */
-	public static void egalisation(BufferedImage img) {
+	public void egalisation(BufferedImage img) {
 		int[] tab = new int[256];
 		int min = 256; 
 		int max = 0;
@@ -70,13 +70,6 @@ public class Egalisation {
 		
 		System.out.println("min "+min+", max "+max);
 		
-		try {
-			imshow(img);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		int couleur[] = new int[3];
 		for (int x = 0; x < img.getWidth(); x++) {
 			for (int y = 0; y < img.getHeight(); y++) {
@@ -90,12 +83,6 @@ public class Egalisation {
 				
 				img.getRaster().setPixel(x, y, couleur);
 			}
-		}
-		try {
-			imshow(img);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }
