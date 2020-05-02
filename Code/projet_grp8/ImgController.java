@@ -132,9 +132,9 @@ public class ImgController {
 				int pixel = img.getRGB(j, i);
 				int red = (pixel >> 16) & 0xff;
 				if (red > s) {
-					im_thresh.getRaster().setPixel(j, i, noir);
+					im_thresh.getRaster().setPixel(j, i, blanc);
 				}else {
-					im_thresh.getRaster().setPixel(j, i,blanc );
+					im_thresh.getRaster().setPixel(j, i, noir );
 				}
 			}
 		}

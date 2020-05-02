@@ -1,10 +1,10 @@
-package Image;
+package Version_Beta;
 
-import Image.ImageTest;
-import Image.Histogramme;
+import Version_Beta.ImageTest;
+import Version_Beta.Histogramme;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import Image.Sobel;
+import Version_Beta.Sobel;
 import projet_grp8.Connexite;
 import projet_grp8.Imshow;
 
