@@ -12,7 +12,7 @@ import java.util.Arrays;
  * @author willy
  *
  */
-class MedianFilter{
+public class MedianFilter{
 	
 	/**
 	 * Filtre median 3x3, qui prend 9 pixel, met dans un tableau, tri puis applique la valeur median sur le pixel central 
@@ -133,7 +133,7 @@ class MedianFilter{
 	 * @param bfi : image a agrandir
 	 * @return
 	 */
-	BufferedImage createBlackBorder(BufferedImage bfi) {
+	public BufferedImage createBlackBorder(BufferedImage bfi) {
 		int bordure = 2;
 		int width = bfi.getWidth();
 		int height = bfi.getHeight();
