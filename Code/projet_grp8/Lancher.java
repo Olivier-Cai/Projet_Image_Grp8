@@ -132,27 +132,7 @@ public class Lancher {
 		
 		return output;
 	}
-	
-	public static BufferedImage testMorphMath(BufferedImage bfi) throws Exception {
 
-		BufferedImage img_erode = null, img_dilate = null;
-		BufferedImage imgRes = null;
-		ImgController ic = new ImgController();
-		
-		bfi = ic.seuillage(bfi, 240);
-		
-		Imshow.imshow(bfi);
-		
-		int r = 7; // le rayon de l'élément structurant
-		
-		img_erode = ErosionDilatation.erode(bfi, r);
-//		Imshow.imshow(img_erode);
-		
-		img_dilate = ErosionDilatation.dilate(bfi, r);
-//		Imshow.imshow(img_dilate);
-		
-		return img_erode;
-	}
 	
 	public static void main(String[] args) throws Exception {
 		

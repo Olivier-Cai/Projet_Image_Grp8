@@ -3,7 +3,11 @@ package Version_Beta;
 import Version_Beta.ImageTest;
 import Version_Beta.Histogramme;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import Version_Beta.Sobel;
 import projet_grp8.Connexite;
 import projet_grp8.Imshow;
@@ -11,10 +15,10 @@ import projet_grp8.Imshow;
 public class Main {
 
     public static void main (String [] args) {
-
+    	File file = new File("Bdd" + File.separator+"escalier4.jpg"); 
         try {
-            BufferedImage bf = ImageTest.chargerImage("/Users/leosok/Downloads/IMG_3530.JPG");
-            
+//            BufferedImage bf = ImageTest.chargerImage("/Users/leosok/Downloads/IMG_3530.JPG");
+            BufferedImage bf = ImageIO.read(file);
             
            //ImageTest.seuillage(bf, 192);
            

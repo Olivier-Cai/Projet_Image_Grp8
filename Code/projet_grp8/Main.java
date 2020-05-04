@@ -6,6 +6,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import projet_grp8.ImgController;
+import projet_grp8.MedianFilter;
+import projet_grp8.Otsu;
+import projet_grp8.Sobel;
+import projet_grp8.ErosionDilatation;
+import projet_grp8.Imshow;
+
 /**
  * Fichier de test pour tout les méthodes
  * @author willy
@@ -23,101 +30,55 @@ public class Main {
 		MedianFilter mf = new MedianFilter();
 		Otsu o = new Otsu();
 		Sobel sb = new Sobel();
-		ErosionDilatation ed = new ErosionDilatation();
-		
-		img = ImageIO.read(file);
-		Imshow.imshow(img);
+//		ErosionDilatation ed = new ErosionDilatation();
 
+		try {
+			img = ImageIO.read(file);
+			//Imshow.imshow(img);
+		} catch (IOException e1) {
+			System.out.println("Erreur de lecture de fichier");
+		}		
+		
 		//test 1.0 : gris > otsu > seuil > median
 		BufferedImage img1 = ic.gris(img);
 		//utile pour l'image sans bruit
 		float seuil = o.otsu(img);
 		System.out.println("otsu seuil : "+seuil);
 		img1 = ic.seuillage(img, seuil); //image en NB avec un seuil auto grace a otsu
-		BufferedImage bj = mf.median(img1);  //supprime les bruits avec median
-//		Imshow.imshow(bj);
+		BufferedImage bj = mf.median(img1);  //supprime les bruits avec median 3
+		//Imshow.imshow(bj);
 		
-		//TODO : image fond noir avec trait blanc mais pas complet
-//		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image original
-//		BufferedImage imgSobel2 = mf.median(imgSobel); //suppression de bruit sur sobel lvl.3 (taille 3x3)
-//		Imshow.imshow(imgSobel2);
-//		
-//		//TODO : trouver un moyen d'accentuer les pixels clairs
-//		float seuilSobel = o.otsu(imgSobel);
-//		BufferedImage imgFinal = ic.seuillage(imgSobel2, seuilSobel);
-//		imgFinal = ic.inverseBinary(imgFinal);
-//		Imshow.imshow(imgFinal);
 		
 		//test 1.1 : sobel > border > median > fusion
 		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image original
-		Imshow.imshow(imgSobel);
+
 		//augmente la taille pour appliquer le filtre median 5x5
-		bj = ic.inverseBinary(bj);
-		bj = mf.createBorder(bj);
-		bj = ic.inverseBinary(bj);
+		bj = mf.createBlackBorder(bj); //ajuste la taille de l'image
+		//Imshow.imshow(bj);
 		BufferedImage imgSobel5 = mf.median5(imgSobel); //suppression de bruit sur sobel lvl.5
 		BufferedImage imgSobelbis = mf.median(imgSobel);
-		Imshow.imshow(imgSobelbis);
-		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel5); //applique les contours de sobel sur l'image bruite
+		//Imshow.imshow(imgSobelbis);
+		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel5, seuil); //applique les contours de sobel sur l'image bruite
 		//avec [55] de seuil resultat correcte
 		imgFinal=mf.median(imgFinal); //supression de bruit
 		imgFinal=mf.median(imgFinal);
 		imgFinal=mf.median(imgFinal);
-		//avec double application mediant, meilleur resultat
-
-
+		//avec plusieurs application mediant, meilleur resultat
+		Imshow.imshow(imgFinal);
 		
 		//on realise une ouverture
 		//dilatation 
 //		Imshow.imshow(imgFinal);
 		imgFinal= ErosionDilatation.dilate(imgFinal, 6);
-//		erode
+		//erode
 //		imgFinal=ed.erode(imgFinal, 3);
-//		Imshow.imshow(imgFinal);
+		Imshow.imshow(imgFinal);
 		imgFinal = mf.median(imgFinal);		imgFinal = mf.median(imgFinal);		imgFinal = mf.median(imgFinal);
 
 		System.out.println("fin du program");
 		
-		
-		//TODO [ok] : methode gris > seuillage > median > inverse NB > sobel + img
-//		File file = new File("Bdd" + File.separator+"escalier1.jpg"); 
-//		BufferedImage img = null;
-//		img = ImageIO.read(file);
-//		BufferedImage imgOne = ImgController.gris(img);
-//		imgOne = ImgController.seuillageControle(imgOne, file);
-//		imgOne = MedianFilter.median(imgOne);
-//		Imshow.imshow(imgOne);
-//		imgOne = ImgController.inverseBinary(imgOne);
-//		Imshow.imshow(imgOne);
-//		BufferedImage imgTwo = Sobel.sobel(img);
-//		imgTwo = MedianFilter.median(imgTwo); 
-//		Imshow.imshow(imgTwo);
-//		BufferedImage imgFinal = ImgController.fusionImgEtSobel(imgOne, imgTwo);
-//		Imshow.imshow(imgFinal);
-		
-		
-		//TODO [ok]: methode luminosite 
-//		int cmd = 0;
-//		int nbdefois = 0;
-//		do {
-//			System.out.println("#### Commande luminosité ###");
-//			System.out.println("Augmenter la luminosité : 1");
-//			System.out.println("Baisser la luminosité :   2");
-//			System.out.println("Quitter :                 3");
-//			System.out.println("############################");
-//			cmd = Saisie.lireEntier("Votre choix ? ");
-//			ImgController.luminosite(cmd, img);
-//			nbdefois ++;
-//		}while ( cmd!=3);
-//		System.out.println("vous avez quitté, il y'a eu "+nbdefois+" modification");
-		
 
-      
-		//TODO [ok]:histogram par ligne et par colonne
-//        Image ima2 = new Image(imgSeuil);
-//        ima2.histoX();
-//        ima2.histoY();
-		
+
 		/**
 		 * TODO generique [ok] : test qui fonctionne ne pas toucher, 
 		 * connexite pour compter le nombre d'objet (marche) noir sur l'image

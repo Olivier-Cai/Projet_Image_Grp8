@@ -138,7 +138,11 @@ public class ImgController {
 				}
 			}
 		}
-		
+		try {
+			Imshow.imshow(im_thresh);
+		} catch (IOException e) {
+			System.out.println("Erreur affichage du résultat de la méthode de ImgController.seuillage");
+		}
 		return im_thresh;
 	}
 	
@@ -211,7 +215,7 @@ public class ImgController {
 	 * @param BufferedImage bfj : sobel 
 	 * @return fusion des deux image avec un parametre particulier
 	 */
-	public BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage imgSobel) {
+	public BufferedImage fusionImgEtSobel(BufferedImage bfi, BufferedImage imgSobel, float OtsuSeuil) {
 		int widthbfi = bfi.getWidth();
 	    int heightbfi = bfi.getHeight();
 	    
@@ -234,12 +238,14 @@ public class ImgController {
 		    	   
 		    	   rj = (pj>>16)&0xff;
 		    	   
-		    	   if(rj >= 55) {
+		    	   if(rj >= OtsuSeuil) {
+		    		   
 		    		   bfi.getRaster().setPixel(x, y, couleurBlanc);
 		    	   }
 		       }
 			}
 	    }
+	    System.out.println("seuil de supperposition de Sobel sur l'image NB : " + OtsuSeuil);
 		return bfi;
 	}
 }

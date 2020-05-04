@@ -68,7 +68,7 @@ class MedianFilter{
 	 * @throws IOException
 	 */
 	public BufferedImage median5(BufferedImage bfi) throws IOException{ 
-		BufferedImage img = createBorder(bfi);
+		BufferedImage img = createBlackBorder(bfi);
 		
         Color[] pixel=new Color[25];
         int[] R=new int[25];
@@ -133,7 +133,7 @@ class MedianFilter{
 	 * @param bfi : image a agrandir
 	 * @return
 	 */
-	BufferedImage createBorder(BufferedImage bfi) {
+	BufferedImage createBlackBorder(BufferedImage bfi) {
 		int bordure = 2;
 		int width = bfi.getWidth();
 		int height = bfi.getHeight();
