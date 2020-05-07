@@ -1,4 +1,4 @@
-package projet_grp8;
+package projet_grp8.util;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

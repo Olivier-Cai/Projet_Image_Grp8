@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import projet_grp8.*; //importation des methodes
-
+import projet_grp8.methode.*;
+import projet_grp8.util.*;
 /**
  * Fichier de test pour tout trouver le nombre d'escalier avec differente image
  * @author willy
@@ -17,9 +17,9 @@ public class Test1 {
 	
 	public static void main (String[] args) throws IOException  {
 
-		File file = new File("Bdd" + File.separator+"escalier21.jpg"); 
-		File file1 = new File("Bdd" + File.separator+"escalier_11.jpg"); 
-		File file2 = new File("Bdd" + File.separator+"8.jpg"); 
+		File file = new File("Bdd" + File.separator+"escalier21.jpg"); //esclalier noire
+		File file1 = new File("Bdd" + File.separator+"escalier_11.jpg"); //escalier du prof
+		File file2 = new File("Bdd" + File.separator+"8.jpg"); //escalier du prof
 		BufferedImage img = null;
 		
 		// creation de class pour utiliser les methodes disponible

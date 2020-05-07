@@ -6,7 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import projet_grp8.*; //importation des methodes
+import projet_grp8.methode.*;
+import projet_grp8.util.*;
 
 
 public class Test2 {

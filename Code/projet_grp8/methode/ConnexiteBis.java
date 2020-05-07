@@ -1,7 +1,10 @@
-package projet_grp8;
+package projet_grp8.methode;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import projet_grp8.methode.*;
+import projet_grp8.util.*;
 
 /**
  * Class de connexite

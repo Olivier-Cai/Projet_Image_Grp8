@@ -9,8 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Version_Beta.Sobel;
-import projet_grp8.Connexite;
-import projet_grp8.Imshow;
+import projet_grp8.methode.*;
+import projet_grp8.util.*;
 
 public class Main {
 

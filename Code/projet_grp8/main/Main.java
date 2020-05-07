@@ -1,4 +1,4 @@
-package projet_grp8;
+package projet_grp8.main;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,15 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import projet_grp8.ImgController;
-import projet_grp8.MedianFilter;
-import projet_grp8.Otsu;
-import projet_grp8.Sobel;
-import projet_grp8.ErosionDilatation;
-import projet_grp8.Imshow;
+import projet_grp8.methode.*;
+import projet_grp8.util.*;
 
 /**
- * Fichier de test pour tout les méthodes
+ * Class de test pour tout les méthodes
  * @author willy
  *
  */

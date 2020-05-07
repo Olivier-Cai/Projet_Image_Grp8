@@ -1,4 +1,4 @@
-package projet_grp8;
+package projet_grp8.methode;
 
 import java.awt.image.BufferedImage;
 import java.lang.Math;

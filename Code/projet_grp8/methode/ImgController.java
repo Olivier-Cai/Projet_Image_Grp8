@@ -1,11 +1,12 @@
-package projet_grp8;
+package projet_grp8.methode;
 
 import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+import projet_grp8.util.*;
 /**
  * Class permettant de modifier le visuel d'une image
  * @author willy
