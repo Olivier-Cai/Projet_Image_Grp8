@@ -129,7 +129,7 @@ public class ImgController {
 		int cols = img.getWidth();
 		
 		BufferedImage im_thresh = new BufferedImage(cols, rows, BufferedImage.TYPE_INT_RGB);
-		
+		System.out.println("seuillage à "+s);
 		
 		int[] noir = {0,0,0,255};
 		int[] blanc = {255,255,255,255};
@@ -247,7 +247,7 @@ public class ImgController {
 			}
 			System.out.println("image fusionné");
 	    }
-	    System.out.println("seuil de supperposition de Sobel sur l'image NB : " + OtsuSeuil);
+	    System.out.println("seuil de superposition de Sobel sur l'image NB : " + OtsuSeuil);
 		return bfi;
 	}
 }
