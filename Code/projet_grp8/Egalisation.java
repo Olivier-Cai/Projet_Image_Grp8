@@ -7,8 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Egalisation {
-	/*
-	 * Affichage de l'image
+	/**
+	 * Fonction imshow : Affichage de l'image
+	 * @param BufferedImage image
 	 */
 	public static void imshow(BufferedImage image) throws IOException {
 	      //Instantiate JFrame 
@@ -20,8 +21,10 @@ public class Egalisation {
 	      frame.setVisible(true);
 	}
 	
-	/*
-	 * Ecriture des barres de l'histogramme
+	/**
+	 * Fonction zeros : Ecriture des barres de l'histogramme
+	 * @param int height, int width
+	 * @return img 
 	 */
 	static BufferedImage zeros(int height, int width) {
 		int[] noir = {0,0,0,255};
@@ -35,11 +38,12 @@ public class Egalisation {
 		return img; 
 	}
 	
-	/*
-	 * Egalisation de l'image du fichier f
-	 * @param f 
+	/**
+	 * Egalisation des pixels de l'image
+	 * @param img une image
+	 * @return une image avec l'application de la mathode
 	 */
-	public void egalisation(BufferedImage img) {
+	public BufferedImage egalisation(BufferedImage img) {
 		int[] tab = new int[256];
 		int min = 256; 
 		int max = 0;
@@ -84,5 +88,6 @@ public class Egalisation {
 				img.getRaster().setPixel(x, y, couleur);
 			}
 		}
+		return img;
 	}
 }

@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * Method du td permettant d'afficher une image 
+ * Class du td permettant d'afficher une image 
  * @author willy
  *
  */

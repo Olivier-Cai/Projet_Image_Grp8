@@ -12,6 +12,11 @@ import java.io.IOException;
  */
 public class Sobel {
 
+	/**
+	 * Fonction sobel : applique le filtre de sobel sur un objet BufferedImage
+	 * @param BufferedImage bfi
+	 * @return BufferedImage bfi
+	 */
 	public BufferedImage sobel(BufferedImage bfi) {
 		int x = bfi.getWidth();
 		int y = bfi.getHeight();

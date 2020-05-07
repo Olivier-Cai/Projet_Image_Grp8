@@ -56,8 +56,6 @@ public class Main {
 		bj = mf.createBlackBorder(bj); //ajuste la taille de l'image
 		//Imshow.imshow(bj);
 		BufferedImage imgSobel5 = mf.median5(imgSobel); //suppression de bruit sur sobel lvl.5
-		BufferedImage imgSobelbis = mf.median(imgSobel);
-		//Imshow.imshow(imgSobelbis);
 		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel5, seuil); //applique les contours de sobel sur l'image bruite
 		//avec [55] de seuil resultat correcte
 		imgFinal=mf.median(imgFinal); //supression de bruit

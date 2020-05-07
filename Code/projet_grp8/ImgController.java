@@ -14,9 +14,9 @@ import javax.imageio.ImageIO;
 public class ImgController {
 	
 	/**
-	 * tranforme l'image de couleur en nuance de gris
-	 * @param bfi
-	 * @return
+	 * Fonction gris : tranforme un objet BufferedImage (image) en nuance de gris
+	 * @param bfi l'image à modifier
+	 * @return bfi nouvelle image
 	 * @throws IOException 
 	 */
 	public BufferedImage gris(BufferedImage bfi) throws IOException {
@@ -39,7 +39,7 @@ public class ImgController {
 		return bfi;
 	}
 	/**
-	 * change la luminosité
+	 * Fonction luminosite : change la luminosité avec une commande int en argument
 	 * @param cmd : commande + ou - sur la console
 	 */
 	public BufferedImage luminosite(int cmd, BufferedImage bfi) {
@@ -78,7 +78,7 @@ public class ImgController {
 		return bfi;
 	}
 	/**
-	 * cette methode evite de faire dapasser les valeur min et max car cela peut cree un pb
+	 * Fonction isMinOrMax : cette methode evite de faire dapasser les valeur min et max car cela peut cree un pb
 	 * @param rgb : valeur du pixel
 	 * @param cmd : commande choisi
 	 * @param bright : luminosite
@@ -92,6 +92,11 @@ public class ImgController {
 		return rgb;
 	}
 	
+	/**
+	 * Fonction inverseBinary : inversion des pixels noir et blanc de l'image
+	 * @param bfi l'image initial
+	 * @return bfi l'image résultat de l'inversion
+	 */
 	public BufferedImage inverseBinary(BufferedImage bfi) {
 		int p = bfi.getRGB(0,0); //récuperer le pixel à coordonné x et y
 		int g = (p>>8)&0xff; 
@@ -113,10 +118,10 @@ public class ImgController {
 	}
 	
 	/**
-	 * 
+	 * Fonction seuillage : seuil une image en noir et blanc
 	 * @param img : image à seuiller pour donner une image NB
 	 * @param s : le seuil en float
-	 * @return
+	 * @return l'image suille
 	 */
 	public BufferedImage seuillage(BufferedImage img, float s) {
 		int rows = img.getHeight();
@@ -138,17 +143,13 @@ public class ImgController {
 				}
 			}
 		}
-		try {
-			Imshow.imshow(im_thresh);
-		} catch (IOException e) {
-			System.out.println("Erreur affichage du résultat de la méthode de ImgController.seuillage");
-		}
+		
 		return im_thresh;
 	}
 	
 	
 	/**
-	 * 
+	 * Fonction seuillageControle : seuil une image en noir et blanc, cette methode laisse l'utilisateur de choisi un seuil manuellement
 	 * @param bfi
 	 * @param path
 	 * @return
@@ -210,7 +211,7 @@ public class ImgController {
 	}
 	
 	/**
-	 * prend une image initiale bfi en NB et une image en sobel bfj, puis transpose les contours blanc uniquement de bfj à bfi 
+	 * Fonction fusionImgEtSobel : prend une image initiale bfi en NB et une image en sobel bfj, puis transpose les contours blanc uniquement de bfj à bfi 
 	 * @param BufferedImage bfi : image a filtrer
 	 * @param BufferedImage bfj : sobel 
 	 * @return fusion des deux image avec un parametre particulier
@@ -223,7 +224,7 @@ public class ImgController {
 	    int heightbfj = imgSobel.getHeight();
 	    
 	    if(widthbfi != widthbfj || heightbfi != heightbfj) {
-	    	System.out.println("les deux images n'ont pas la même dimension");
+	    	System.err.println("les deux images n'ont pas la même dimension");
 	    	
 	    }
 	    else {
@@ -239,11 +240,11 @@ public class ImgController {
 		    	   rj = (pj>>16)&0xff;
 		    	   
 		    	   if(rj >= OtsuSeuil) {
-		    		   
 		    		   bfi.getRaster().setPixel(x, y, couleurBlanc);
 		    	   }
 		       }
 			}
+			System.out.println("image fusionné");
 	    }
 	    System.out.println("seuil de supperposition de Sobel sur l'image NB : " + OtsuSeuil);
 		return bfi;

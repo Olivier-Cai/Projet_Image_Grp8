@@ -2,10 +2,21 @@ package projet_grp8;
 
 import java.awt.image.BufferedImage;
 
+
+/**
+ * Class d'otsu
+ * @author willy
+ *
+ */
 public class Otsu {
 
 	private float seuilOtsu;
 	
+	/**
+	 * Fonction otsu : methode ostu pour trouver un seuillage
+	 * @param bf l'image 
+	 * @return le resultat
+	 */
 	public float otsu(BufferedImage bf) {
 
 		int width = bf.getWidth();

@@ -3,13 +3,17 @@ package projet_grp8;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-
+/**
+ * Class de connexite
+ * @author willy
+ * lien de l'algorithme http://brouet.imag.fr/fberard/Proj07Camera/Connexite
+ */
 public class ConnexiteBis{
 
 	/**
-	 * filtre pour recupere une image en noir et blanc pour colorier
+	 * Fonction connexiteBis : filtre pour recupere une image en noir et blanc pour colorier
 	 * @param img : image en noi et blanc
-	 * @return
+	 * @return image
 	 */
 	public BufferedImage connexiteBis(BufferedImage bfi) {
 		int height = bfi.getHeight();
@@ -72,11 +76,11 @@ public class ConnexiteBis{
 	}
 	
 	/**
-	 * savoir si le predecesseur possede une valeur 
+	 * Fonction predecesseur : savoir si le predecesseur possede une valeur 
 	 * @param j : coordonnee x
 	 * @param i : coordonnee y
 	 * @param img
-	 * @return
+	 * @return boolean
 	 */
 	public boolean predecesseur(int j, int i, BufferedImage img) {
 		boolean isNotNum = false;
@@ -92,11 +96,11 @@ public class ConnexiteBis{
 	}
 	
 	/**
-	 * donne la valeur la plus petite parmis les predecesseurs
+	 * Fonction lowestPxPredecesseur : donne la valeur la plus petite parmis les predecesseurs
 	 * @param x : coordonne x 
 	 * @param y : coordonne y
 	 * @param img
-	 * @return
+	 * @return integer
 	 */
 	public int lowestPxPredecesseur(int j, int i, BufferedImage img) {
 
@@ -124,11 +128,11 @@ public class ConnexiteBis{
 	}
 	
 	/**
-	 * recupere le plus petit de a et b sans inclure la valeur 0 pour le noir
+	 * Fonction lower : recupere le plus petit de a et b sans inclure la valeur 0 pour le noir
 	 * @param a la premiere valeur 
 	 * @param b la seconde valeur
 	 * @param base la valeur initiale
-	 * @return
+	 * @return integer 
 	 */
 	public int lower(int a, int b, int base) {
 		if(a >= 1 && b >= 1) {

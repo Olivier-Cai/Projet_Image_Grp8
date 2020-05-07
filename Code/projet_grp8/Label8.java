@@ -4,6 +4,11 @@ import java.awt.image.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class de labelisation
+ * @author willy
+ *
+ */
 public class Label8 {
     static final int NPASS = 11;
 
@@ -62,7 +67,7 @@ public class Label8 {
     /**
      * getCC : colorie les forme en couleur
      * @param inImage
-     * @return
+     * @return une image colorie
      */
     static public BufferedImage getCC(BufferedImage inImage) {
     	
@@ -92,7 +97,7 @@ public class Label8 {
     /**
      * getNumberOfCC : compte le nombre de couleur sur une image
      * @param image
-     * @return
+     * @return le resultat
      */
     static public int getNumberOfCC(BufferedImage image) {
     	Set<Integer> colors = new HashSet<Integer>();

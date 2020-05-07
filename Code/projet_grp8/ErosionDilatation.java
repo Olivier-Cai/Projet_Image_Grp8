@@ -6,6 +6,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ColorConvertOp;
 
+/**
+ * Class d'erosion et de dilatation
+ * @author willy
+ *
+ */
 public class ErosionDilatation {
 
 	/**
