@@ -196,8 +196,9 @@ public class MedianFilter{
 		return img;
 
 	}
+	
 	/**
-	 * Fonction createBlackBorder : Cree une nouvelle image plus grande avec une bordure de 2 pour effectuer un median 5x5
+	 * Fonction createBlackBorder : Cree une nouvelle image plus grande avec une bordure de 2 pixels pour effectuer un median 5x5
 	 * @param height : la taile de l'image
 	 * @param width : la taile de l'image
 	 * @param bfi : image a agrandir
@@ -241,6 +242,43 @@ public class MedianFilter{
 		return img;
 	}
 
+	/**
+	 * Fonction deleteBorder : Cree une nouvelle image plus petite avec une bordure de 2
+	 * @param height : la taile de l'image
+	 * @param width : la taile de l'image
+	 * @param bfi : image a retrcir
+	 * @return
+	 */
+	public BufferedImage deleteBorder(BufferedImage bfi) {
+		int bordure = 2;
+		int width = bfi.getWidth();
+		int height = bfi.getHeight();
+		int i, j ;
+		int[] noir = { 0, 0, 0, 255 };
+		int p = bfi.getRGB(0,0);
+
+		int r = (p>>16)&0xff; 
+		int g = (p>>8)&0xff; 
+		int b = p&0xff; 
+		BufferedImage img = new BufferedImage(width-bordure*2, height-bordure*2, BufferedImage.TYPE_INT_ARGB);
+		// WritableRaster raster = img.getRaster();
+		for (int x = bordure; x < width-bordure; x++) {
+			for (int y = bordure; y < height-bordure; y++) {
+				i=x-bordure;
+				j=y-bordure;
+				p = bfi.getRGB(i, j);
+
+				r = (p>>16)&0xff; 
+				g = (p>>8)&0xff; 
+				b = p&0xff; 
+
+				int colorImg[] = {r, g, b, 255};
+				img.getRaster().setPixel(i, j, colorImg);
+
+			}
+		}
+		return img;
+	}
 }
 
 

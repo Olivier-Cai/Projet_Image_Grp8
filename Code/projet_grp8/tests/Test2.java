@@ -35,6 +35,12 @@ public class Test2 {
 		Egalisation eg = new Egalisation();
 		Imshow.imshow(img1);
 		img1 = eg.egalisation(img1);
+		
+		System.out.println(" la taille avant : " + img1.getWidth());
+		BufferedImage img11 = mf.deleteBorder(img1);
+		System.out.println(" la taille avant : " + img11.getWidth());
+		
+		
 //		//test 1.1 : sobel > border > median > fusion
 //		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image original
 //

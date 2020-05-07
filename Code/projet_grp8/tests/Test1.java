@@ -17,9 +17,9 @@ public class Test1 {
 	
 	public static void main (String[] args) throws IOException  {
 
-		File file = new File("Bdd" + File.separator+"escalier21.jpg"); //esclalier noire
+		File file = new File("Bdd" + File.separator+"escalier212.jpg"); //esclalier noire
 		File file1 = new File("Bdd" + File.separator+"escalier_11.jpg"); //escalier du prof
-		File file2 = new File("Bdd" + File.separator+"8.jpg"); //escalier du prof
+		File file2 = new File("Bdd" + File.separator+"escalierPerso.jpg"); //escalier du prof
 		BufferedImage img = null;
 		
 		// creation de class pour utiliser les methodes disponible
@@ -37,6 +37,7 @@ public class Test1 {
 		} catch (IOException e1) {
 			System.err.println("Erreur de lecture de fichier");
 		}		
+//		Imshow.imshow(img);
 		
 		//test 1.0 : gris > otsu > seuil > median
 		BufferedImage img1 = ic.gris(img);
@@ -45,7 +46,7 @@ public class Test1 {
 //		Imshow.imshow(bj);
 		float seuil = o.otsu(img);
 		System.out.println("otsu seuil : "+seuil);
-		img1 = ic.seuillage(img, seuil); //image en NB avec un seuil auto grace a otsu
+		img1 = ic.seuillage(img, seuil-25); //image en NB avec un seuil auto grace a otsu
 		bj = mf.median(img1);  //supprime les bruits avec median 3
 //		Imshow.imshow(bj);
 		
@@ -54,12 +55,10 @@ public class Test1 {
 		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image original
 //		Imshow.imshow(imgSobel);
 		//augmente la taille pour appliquer le filtre median 5x5
-		bj = ed.dilate(bj, 5); //dilatation du blanc rayon de 2pix
-		bj=mf.median(bj);
-
-//		Imshow.imshow(bj);
-		Imshow.imshow(bj);//TODO
-		BufferedImage imgFinal = ic.fusionImgEtSobel(bj, imgSobel, (int)seuil-10); //applique les contours de sobel sur l'image bruite
+		Imshow.imshow(bj);
+		bj = ed.close(bj, 3); // rayon de n-pixels
+		BufferedImage bjMedian5 = mf.median(bj);
+		BufferedImage imgFinal = ic.fusionImgEtSobel(bjMedian5, imgSobel, (int)seuil-20); //applique les contours de sobel sur l'image bruite
 
 		Imshow.imshow(imgFinal);
 		
@@ -85,16 +84,16 @@ public class Test1 {
 //		
 //
 //
-//		/**
-//		 * TODO generique [ok] : test qui fonctionne ne pas toucher, 
-//		 * connexite pour compter le nombre d'objet (marche) noir sur l'image
-//		 * 
-//		 * affichage du resultat
-//		 */
-//		imgFinal = ic.inverseBinary(imgFinal);
-//		BufferedImage cc = Label8.getCC(imgFinal);
-//		Imshow.imshow(cc);
-//		int nbColor = Label8.getNumberOfCC(cc);
-//		System.out.println("nombre de marche avec label8 : "+(nbColor-1));
+		/**
+		 * TODO generique [ok] : test qui fonctionne ne pas toucher, 
+		 * connexite pour compter le nombre d'objet (marche) noir sur l'image
+		 * 
+		 * affichage du resultat
+		 */
+		imgFinal = ic.inverseBinary(imgFinal);
+		BufferedImage cc = Label8.getCC(imgFinal);
+		Imshow.imshow(cc);
+		int nbColor = Label8.getNumberOfCC(cc);
+		System.out.println("nombre de marche avec label8 : "+(nbColor-1));
 	}
 }

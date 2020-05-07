@@ -52,7 +52,7 @@ public class ErosionDilatation {
      * @param a le rayon de l'élément structurant
      * @return la nouvelle BufferedImage après érosion de la BufferedImage source
      */
-    public static BufferedImage erode(BufferedImage img, int a) {
+    public BufferedImage erode(BufferedImage img, int a) {
         // On crée la BufferedImage destination, de même dimension que la source, et en niveau de gris
         BufferedImage newImgGray = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         int newGrayLevel = 0;
@@ -125,7 +125,7 @@ public class ErosionDilatation {
      * @param a le rayon de l'élément structurant
      * @return la nouvelle BufferedImage après dilatation de la BufferedImage source
      */
-    public static BufferedImage dilate(BufferedImage img, int a) {
+    public BufferedImage dilate(BufferedImage img, int a) {
         // On crée la BufferedImage destination, de même dimension que la source, et en niveau de gris
         BufferedImage newImgGray = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         int newGrayLevel = 0;
@@ -153,7 +153,7 @@ public class ErosionDilatation {
      * @param a le rayon de l'élément structurant
      * @return le niveau de gris "dilaté" du pixel courant
      */
-    private static int mask_dilate(int x, int y, BufferedImage img, int a) {
+    private int mask_dilate(int x, int y, BufferedImage img, int a) {
         // Variables temporaires stockant les deux valeurs calculées de niveau de gris, pour chaque pixel de l'élément structurant
         double tempMuGL, tempFGL;
         // Variable temporaire stockant le minimum des deux variables temporaires ci-dessus
@@ -198,7 +198,7 @@ public class ErosionDilatation {
      * @param a le rayon de l'élément structurant
      * @return la BufferedImage éordée et dilatée correspondante
      */
-    public static BufferedImage open(BufferedImage img, int a) {
+    public BufferedImage open(BufferedImage img, int a) {
         // On définie une BufferedImage vide, aux dimensions de la BufferedImage source, et en niveau de gris
         BufferedImage tmpImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         // On effectue l'ouverture
@@ -213,7 +213,7 @@ public class ErosionDilatation {
      * @param a le rayon de l'élément structurant
      * @return la BufferedImage dilatée et érodée correspondante
      */
-    public static BufferedImage close(BufferedImage img, int a) {
+    public BufferedImage close(BufferedImage img, int a) {
         // On définie une BufferedImage vide, aux dimensions de la BufferedImage source, et en niveau de gris
         BufferedImage tmpImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         // On effectue l'ouverture
