@@ -79,6 +79,6 @@ public class Test2 {
 //		BufferedImage cc = Label8.getCC(imgFinal);
 //		Imshow.imshow(cc);
 //		int nbColor = Label8.getNumberOfCC(cc);
-//		System.out.println("nombre de marche avec label8 : "+(nbColor-1));
+//		System.out.println("nombre de marche avec label8 : "+nbColor);
 	}
 }

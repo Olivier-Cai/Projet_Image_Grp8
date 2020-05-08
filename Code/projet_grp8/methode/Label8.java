@@ -112,7 +112,7 @@ public class Label8 {
         }
         System.out.println("There are "+colors.size()+" colors");
         
-        return colors.size();
+        return colors.size()-1;
     }
     
 }

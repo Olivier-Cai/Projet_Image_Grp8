@@ -35,7 +35,7 @@ public class Test1 {
 		
 		try {
 			img = ImageIO.read(file2);
-//			Imshow.imshow(img);
+			Imshow.imshow(img);
 			//Imshow.imshow(img);
 		} catch (IOException e1) {
 			System.err.println("Erreur de lecture de fichier");
@@ -56,14 +56,13 @@ public class Test1 {
 		bj = ed.close(bj, 3); // rayon de n-pixels
 //		Imshow.imshow(bj);
 		BufferedImage bjMedian = mf.median(bj);
+//		Imshow.imshow(bjMedian);
 		
 		//test 1.1 : sobel > border > median > fusion
 		BufferedImage imgSobel = sb.sobel(img); // application de sobel sur l'image original
 //		Imshow.imshow(imgSobel);
-		//augmente la taille pour appliquer le filtre median 5x5
-//		Imshow.imshow(imgSobel);
 		imgSobel = mf.median(imgSobel);
-		Imshow.imshow(imgSobel);
+//		Imshow.imshow(imgSobel);
 		float seuilb = seuil;
 		
 		
@@ -71,7 +70,7 @@ public class Test1 {
 		System.out.println("seuilb vaut "+seuilb+".");
 		
 		imgSobel = ic.seuillage(imgSobel, seuilb);
-		Imshow.imshow(imgSobel);
+//		Imshow.imshow(imgSobel);
 		BufferedImage imgFinal = ic.fusionImgEtSobel(bjMedian, imgSobel, (int)seuil-20); //applique les contours de sobel sur l'image bruite
 		imgFinal = mf.median(imgFinal);
 
@@ -94,9 +93,10 @@ public class Test1 {
 		 * affichage du resultat
 		 */
 		imgFinal = ic.inverseBinary(imgFinal); //change les marches "Noir" en "Blanc"
+		Imshow.imshow(imgFinal);
 		BufferedImage cc = Label8.getCC(imgFinal);
 		Imshow.imshow(cc);
 		int nbColor = Label8.getNumberOfCC(cc);
-		System.out.println("nombre de marche avec label8 : "+(nbColor-1)); //-1 car on ne va pas prendre en compte la couleur noire
+		System.out.println("nombre de marche avec label8 : "+nbColor); //-1 car on ne va pas prendre en compte la couleur noire
 	}
 }
