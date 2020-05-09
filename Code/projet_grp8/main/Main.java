@@ -23,6 +23,8 @@ public class Main {
 		File file2 = new File("Bdd" + File.separator+"escalierPerso.jpg"); //escalierPerso.jpg, marche de couleur sombre
 		File file3 = new File("Bdd" + File.separator+"imag5.jpg"); //imag5.jpg, marche pas car la marche est de couleur clair
 		File file4 = new File("Bdd" + File.separator+"eescalier.jpg"); //eescalier.jpg, marche pas car l'ombre a cote est colorie
+		
+		
 		BufferedImage img = null;
 		
 		// creation de class pour utiliser les methodes disponible
