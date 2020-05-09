@@ -39,7 +39,6 @@ public class Main {
 		try {
 			img = ImageIO.read(file2);
 			Imshow.imshow(img);
-			//Imshow.imshow(img);
 		} catch (IOException e1) {
 			System.err.println("Erreur de lecture de fichier");
 		}		
@@ -67,16 +66,12 @@ public class Main {
 		imgSobel = mf.median(imgSobel);
 //		Imshow.imshow(imgSobel);
 		float seuilb = seuil;
-		
-		
 		seuilb -= (seuil*0.65);
 		System.out.println("seuilb vaut "+seuilb+".");
-		
 		imgSobel = ic.seuillage(imgSobel, seuilb);
 //		Imshow.imshow(imgSobel);
 		BufferedImage imgFinal = ic.fusionImgEtSobel(bjMedian, imgSobel, (int)seuil-20); //applique les contours de sobel sur l'image bruite
 		imgFinal = mf.median(imgFinal);
-
 //		Imshow.imshow(imgFinal);
 
 		/**
@@ -86,10 +81,9 @@ public class Main {
 		 * affichage du resultat
 		 */
 		imgFinal = ic.inverseBinary(imgFinal); //change les marches "Noir" en "Blanc"
-		Imshow.imshow(imgFinal);
 		BufferedImage cc = Label8.getCC(imgFinal);
 		Imshow.imshow(cc);
 		int nbColor = Label8.getNumberOfCC(cc);
-		System.out.println("nombre de marche avec label8 : "+nbColor); //-1 car on ne va pas prendre en compte la couleur noire
+		System.out.println("Nombre de marche avec label8 : "+nbColor);
 	}
 }
